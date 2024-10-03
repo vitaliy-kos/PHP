@@ -1,0 +1,11 @@
+<?php
+
+// echo "Привет, GeekBrains!<br>".date("Y-m-d H:i:s") ."<br><br>";
+// phpinfo();
+
+$a = 5;
+$b = '05';
+var_dump($a == $b);
+var_dump((int)'012345');
+var_dump((float)123.0 === (int)123.0);
+var_dump(0 == 'hello, world');
