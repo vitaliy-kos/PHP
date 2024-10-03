@@ -16,9 +16,9 @@ function multiplication(float $num1, float $num2): float
     return $num1 * $num2;
 }
 
-function division(float $num1, float $num2): float
+function division(float $num1, float $num2): float|string
 {
-    return $num2 > 0 ? $num1 / $num2 : 0;
+    return $num2 > 0 ? $num1 / $num2 : "Делить на ноль запрещено";
 }
 
 // 2. Реализовать функцию с тремя параметрами: function mathOperation($arg1, $arg2, $operation), где $arg1, $arg2 – значения аргументов, $operation – строка с названием операции. В зависимости от переданного значения операции выполнить одну из арифметических операций (использовать функции из пункта 3) и вернуть полученное значение (использовать switch).
@@ -36,9 +36,11 @@ function mathOperationFunction(float $num1, float $num2, string $operation): flo
             return division($num1, $num2);
 
         default:
-            return 0;
+            throw new Exception("Math operation is required");
     }
 }
+
+echo mathOperationFunction(1, 2, 'addition') . PHP_EOL;
 
 // 3. Объявить массив, в котором в качестве ключей будут использоваться названия областей, а в качестве значений – массивы с названиями городов из соответствующей области. Вывести в цикле значения массива, чтобы результат был таким: Московская область: Москва, Зеленоград, Клин Ленинградская область: Санкт-Петербург, Всеволожск, Павловск, Кронштадт Рязанская область … (названия городов можно найти на maps.yandex.ru).
 
