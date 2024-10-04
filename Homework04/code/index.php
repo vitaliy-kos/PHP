@@ -58,11 +58,8 @@ $historicalBook = new HistoricalBook("Название 2", "Автор 2", 100);
 // У всех книг формируется в конечном итоге статистика по кол-ву прочтений.
 // Что можно вынести в абстрактный класс, а что надо унаследовать?
 
-interface getableOnHand {
-    function getOnHand(): string;
-}
 
-abstract class Book2 implements getableOnHand
+abstract class Book2
 {
     public string $title;
     public int $readingsCounter;
@@ -71,6 +68,8 @@ abstract class Book2 implements getableOnHand
         $this->title = $title;
         $this->readingsCounter = 0;
     }
+
+    abstract function getOnHand(): string;
 }
 
 class DigitalBook extends Book2 
