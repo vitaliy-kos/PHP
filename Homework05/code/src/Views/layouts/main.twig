@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="/assets/style.css?{{ random(0, 10000000) }}">
+    </head>
+    <body>
+        {% include "includes/header.twig" %}
+        <div class="content">
+            {% include content_template_name %}
+        </div>
+        {% include "includes/sidebar.twig" %}
+        {% include "includes/footer.twig" %}
+    </body>
+</html>
