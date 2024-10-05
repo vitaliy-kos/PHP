@@ -7,7 +7,7 @@
     <body>
         {% include "includes/header.twig" %}
         <div class="content">
-            {% include content_template_name %}
+            {% block content %}{% endblock %}
         </div>
         {% include "includes/sidebar.twig" %}
         {% include "includes/footer.twig" %}

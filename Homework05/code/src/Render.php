@@ -20,9 +20,10 @@ class Render {
     }
 
     public function renderPage(string $contentTemplateName = 'index.twig', array $templateVariables = []) {
-        $template = $this->environment->load('layouts/main.twig');
+        // $template = $this->environment->load('layouts/main.twig');
+        $template = $this->environment->load($contentTemplateName);
         
-        $templateVariables['content_template_name'] = $contentTemplateName;
+        // $templateVariables['content_template_name'] = $contentTemplateName;
  
         return $template->render($templateVariables);
     }

@@ -1,3 +1,7 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+
 <p>Список пользователей в хранилище</p>
 
 <ul id="navigation">
@@ -5,3 +9,5 @@
         <li>{{ user.getUserName() }}. День рождения: {{ user.getUserBirthday() | date('d.m.Y') }}</li>
     {% endfor %}
 </ul>
+
+{% endblock %}
