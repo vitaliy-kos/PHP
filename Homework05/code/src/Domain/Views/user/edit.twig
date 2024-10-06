@@ -1,0 +1,16 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<form action="/user/update" class="create-user">
+    <h1>Редактирование пользователя</h1>
+    <h2>ID {{ user.getId() }}</h2>
+
+    <input type="hidden" name="id" value="{{ user.getId() }}">
+    <input type="text" name="firstname" placeholder="Имя" value="{{ user.getFirstName() }}">
+    <input type="text" name="lastname" placeholder="Фамилия" value="{{ user.getLastName() }}">
+    <input type="text" name="birthday" placeholder="Дата рождения в формате 31-12-2024" value="{{ user.getBirthday() | date('d-m-Y') }}">
+
+    <input type="submit" value="Сохранить">
+
+</form>
+{% endblock %}

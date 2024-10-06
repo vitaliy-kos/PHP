@@ -1,0 +1,13 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+
+<p>Список пользователей в хранилище</p>
+
+<ul id="navigation">
+    {% for user in users %}
+        <li>{{ user.getFirstName() }} {{ user.getLastName() }}. День рождения: {{ user.getBirthday() | date('d.m.Y') }} <a href="/user/edit/?id={{ user.getId() }}" class="btn">Редактировать</a><a href="/user/delete/?id={{ user.getId() }}" class="btn">Удалить</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

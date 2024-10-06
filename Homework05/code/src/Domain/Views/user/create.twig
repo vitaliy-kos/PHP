@@ -1,0 +1,14 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<form action="/user/save" class="create-user">
+    <h1>Создание пользователя</h1>
+
+    <input type="text" name="firstname" placeholder="Имя">
+    <input type="text" name="lastname" placeholder="Фамилия">
+    <input type="text" name="birthday" placeholder="Дата рождения в формате 31-12-2024">
+
+    <input type="submit" value="Создать">
+
+</form>
+{% endblock %}
