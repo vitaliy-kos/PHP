@@ -8,6 +8,11 @@ class PageController {
     public function actionIndex() {
         $render = new Render();
         
-        return $render->renderPage('index.twig', ['title' => 'Главная страница']);
+        return $render->renderPage(
+            'index.twig', 
+            [
+                'title' => 'Главная страница'
+            ]
+        );
     }
 }

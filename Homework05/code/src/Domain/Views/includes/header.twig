@@ -1,8 +1,17 @@
 <header>
+    {% if user_authorized != "" %}
+        Привет, {{ user_firstname }}<br>
+    {% endif %}
     Текущее время: {{ date()|date('H:i:s') }}<br>
     <ul class="menu">
-        <li><a href="/">Главная</a></li>
-        <li><a href="/user">Пользователи</a></li>
-        <li><a href="/user/create">Создать пользователя</a></li>
+        {% if not user_authorized %}
+            <li><a href="/user/auth">Авторизация в системе</a></li>
+        {% else %}
+            <li><a href="/">Главная</a></li>
+            <li><a href="/user">Пользователи</a></li>
+            <li><a href="/user/create">Создать пользователя</a></li>
+            <li><a href="/user/logout">Выйти из системы</a></li>
+        {% endif %}
+
     </ul>
 </header>

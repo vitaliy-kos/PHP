@@ -1,10 +1,12 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-<form action="/user/update" class="create-user">
+<form action="/user/update" method="post" class="create-user">
+    <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    
     <h1>Редактирование пользователя</h1>
     <h2>ID {{ user.getId() }}</h2>
-
+    
     <input type="hidden" name="id" value="{{ user.getId() }}">
     <input type="text" name="firstname" placeholder="Имя" value="{{ user.getFirstName() }}">
     <input type="text" name="lastname" placeholder="Фамилия" value="{{ user.getLastName() }}">

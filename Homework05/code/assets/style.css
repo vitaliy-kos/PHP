@@ -12,25 +12,23 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: 100vw;
+  font-size: 18px;
 }
 
 .content {
   width: 80%;
   padding: 20px;
+  min-height: calc(100vh - 100px - 100px);
 }
 
-.create-user {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  gap: 10px;
-  background: #ebebeb;
-  padding: 20px;
-  border-radius: 20px;
-}
-.create-user input {
-  padding: 5px;
-  font-size: 14px;
+.error {
+  border: 1px solid rgb(255, 63, 63);
+  border-radius: 5px;
+  padding: 10px;
+  color: rgb(255, 63, 63);
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .btn {
@@ -46,11 +44,30 @@ body {
   margin-bottom: 3px;
 }
 
+.create-user {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  gap: 10px;
+  background: #ebebeb;
+  padding: 20px;
+  border-radius: 20px;
+}
+.create-user input {
+  padding: 5px;
+  font-size: 14px;
+}
+
 .sidebar {
-  width: 20%;
+  width: calc(20% - 20px);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid grey;
+  border-radius: 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 header, footer {
@@ -62,6 +79,7 @@ header, footer {
 }
 
 header {
+  height: 100px;
   background: #d1d1d1;
   padding: 30px;
   flex-direction: column;
@@ -69,7 +87,7 @@ header {
 header .menu {
   display: flex;
   gap: 30px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 header .menu li a {
   font-size: 20px;
@@ -81,6 +99,7 @@ header .menu li a:hover {
 }
 
 footer {
+  height: 100px;
   background: #fdd4d4;
   padding: 30px;
 }/*# sourceMappingURL=style.css.map */

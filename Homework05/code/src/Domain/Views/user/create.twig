@@ -1,9 +1,9 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-<form action="/user/save" class="create-user">
+<form action="/user/save" method="post" class="create-user">
     <h1>Создание пользователя</h1>
-
+    <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <input type="text" name="firstname" placeholder="Имя">
     <input type="text" name="lastname" placeholder="Фамилия">
     <input type="text" name="birthday" placeholder="Дата рождения в формате 31-12-2024">

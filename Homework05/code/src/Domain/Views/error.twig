@@ -1,7 +1,7 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-<h2>Произошла ошибка</h2>
+<h2>{{ error_title ? error_title : 'Произошла ошибка' }}</h2>
 
 <p>{{ error_message }}</p>
 {% endblock %}

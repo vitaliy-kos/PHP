@@ -47,23 +47,31 @@ class User {
         $this->userBirthday = strtotime($birthdayString);
     }
 
-    public static function validateRequestData(): bool{
-        if (
-            isset($_GET['firstname']) && !empty($_GET['firstname']) &&
-            isset($_GET['lastname']) && !empty($_GET['lastname']) &&
-            isset($_GET['birthday']) && !empty($_GET['birthday'])
+    public static function validateRequestData(): bool {
+        $result = true;
+
+        if (!(isset($_POST['firstname']) && !empty($_POST['firstname']) &&
+              isset($_POST['lastname']) && !empty($_POST['lastname']) &&
+              isset($_POST['birthday']) && !empty($_POST['birthday']))
         ){
-            return true;
-        }
-        else{
             return false;
         }
+
+        if(!preg_match('/^(\d{2}-\d{2}-\d{4})$/', $_POST['birthday'])){
+            $result =  false;
+        }
+        
+        if(!isset($_SESSION['csrf_token']) || $_SESSION['csrf_token'] != $_POST['csrf_token']){
+            $result = false;
+        }
+
+        return $result;
     }
 
     public function setParamsFromRequestData(): void {
-        $this->userFirstName = $_GET['firstname'];
-        $this->userLastName = $_GET['lastname'];
-        $this->setBirthdayFromString($_GET['birthday']); 
+        $this->userFirstName = htmlspecialchars($_POST['firstname']);
+        $this->userLastName = htmlspecialchars($_POST['lastname']);
+        $this->setBirthdayFromString($_POST['birthday']); 
     }
 
     public function saveToStorage(){
@@ -112,19 +120,21 @@ class User {
         }
     }
 
-    public function updateUser(array $userDataArray): void{
+    public function updateUser(int $id, array $userDataArray): void {
         $sql = "UPDATE users SET ";
 
         $counter = 0;
         foreach($userDataArray as $key => $value) {
             $sql .= "$key = :$key";
 
-            if($counter != count($userDataArray)-1) {
+            if ($counter != count($userDataArray)-1) {
                 $sql .= ",";
             }
 
             $counter++;
         }
+
+        $sql .= " WHERE id = $id";
         
         $handler = Application::$storage->get()->prepare($sql);
         $handler->execute($userDataArray);
@@ -135,6 +145,24 @@ class User {
 
         $handler = Application::$storage->get()->prepare($sql);
         $handler->execute(['id' => $user_id]);
+    }
+
+    public static function getRoles($id) : array {
+        $roles = [];
+
+        $rolesSql = "SELECT * FROM user_roles WHERE id_user = :id";
+
+        $handler = Application::$storage->get()->prepare($rolesSql);
+        $handler->execute(['id' => $id]);
+        $result = $handler->fetchAll();
+
+        if(!empty($result)){
+            foreach($result as $role){
+                $roles[] = $role['role'];
+            }
+        }
+
+        return $roles;
     }
     
 }
