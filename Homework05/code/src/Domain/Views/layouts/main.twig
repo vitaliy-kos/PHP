@@ -5,6 +5,8 @@
         <link rel="stylesheet" href="/assets/style.css?{{ random(0, 10000000) }}">
     </head>
     <body>
+        {# {{ xdebug | raw }} #}
+        
         {% include "includes/header.twig" %}
         <div class="content">
             {% block content %}{% endblock %}

@@ -6,6 +6,10 @@ use Geekbrains\Application\Application\Render;
 use Geekbrains\Application\Domain\Controllers\AbstractController;
 use Geekbrains\Application\Infrastructure\Config;
 use Geekbrains\Application\Infrastructure\Storage;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 
 class Application {
     private const APP_NAMESPACE = 'Geekbrains\Application\Domain\Controllers\\';
@@ -14,11 +18,18 @@ class Application {
     public static Config $config;
     public static Storage $storage;
     public static Auth $auth;
+    public static Logger $logger;
 
     public function __construct(){
         Application::$config = new Config;
         Application::$storage = new Storage;
         Application::$auth = new Auth;
+        
+        Application::$logger = new Logger('application_logger');
+        Application::$logger->pushHandler(new StreamHandler(
+            $_SERVER['DOCUMENT_ROOT'] . "/log/" . Application::$config->get()['log']['LOGS_FILE'] . "-" . date('d-m-Y') . ".log", Level::Debug
+        ));
+        Application::$logger->pushHandler(new FirePHPHandler());
     }
 
     public function run() : string {
@@ -78,6 +89,9 @@ class Application {
                 
             }
             else {
+                $log_message = "Попытка вызова метода {$this->methodName} в контроллере {$this->controllerName}";
+                Application::$logger->error($log_message);
+
                 return $this->renderNotFoundPage();
             }
         }

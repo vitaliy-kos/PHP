@@ -28,6 +28,11 @@ class Render {
         $templateVariables['user_authorized'] = $_SESSION['id'] ?? false ? true : false;
         $templateVariables['user_firstname'] = $_SESSION['user_firstname'] ?? "";
 
+        // ob_start();
+        // \xdebug_info();
+        // $xdebug = ob_get_clean();
+        // $templateVariables['xdebug'] = $xdebug;
+
         return $template->render($templateVariables);
     }
 

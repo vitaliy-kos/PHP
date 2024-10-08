@@ -1,4 +1,5 @@
 <?php
+// $memory_start = memory_get_usage();
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -11,3 +12,5 @@ try {
 } catch (Exception $e) {
     echo Render::renderExceptionPage($e);
 }
+
+// echo 'Потреблено памяти ' . round((memory_get_usage() - $memory_start) / 1024 / 1024, 2) . "МБ памяти";

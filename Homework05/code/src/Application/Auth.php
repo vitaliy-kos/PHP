@@ -6,6 +6,10 @@ class Auth {
         return password_hash($_GET['pass_string'], PASSWORD_BCRYPT);
     }
 
+    public static function getToken(): string {
+        return md5(random_bytes(32));
+    }
+
     public function proceedAuth(string $login, string $password, string $rememberMe): bool {
         $sql = "SELECT id, user_firstname, user_lastname, password_hash FROM users WHERE login = :login";
 
@@ -14,13 +18,11 @@ class Auth {
         $result = $handler->fetchAll();
 
         if(!empty($result) && password_verify($password, $result[0]['password_hash'])){
-            $_SESSION['user_firstname'] = $result[0]['user_firstname'];
-            $_SESSION['user_lastname'] = $result[0]['user_lastname'];
-            $_SESSION['id'] = $result[0]['id'];
+            static::setSession($result[0]['id'], $result[0]['user_firstname'], $result[0]['user_lastname']);
             
             if ((int) $rememberMe) {
-                $auth_token = md5(random_bytes(32));
-                setcookie('auth', $auth_token, strtotime('+365 days'), '/');
+                $auth_token = static::getToken();
+                setcookie('auth', $auth_token, strtotime('+30 days'), '/');
 
                 $sql = "UPDATE users SET hash = :hash WHERE id = :id";
                 $handler = Application::$storage->get()->prepare($sql);
@@ -44,13 +46,16 @@ class Auth {
             $result = $handler->fetchAll();
 
             if (!empty($result)) {
-                $_SESSION['user_firstname'] = $result[0]['user_firstname'];
-                $_SESSION['user_lastname'] = $result[0]['user_lastname'];
-                $_SESSION['id'] = $result[0]['id'];
+                static::setSession($result[0]['id'], $result[0]['user_firstname'], $result[0]['user_lastname']);
             }
            
-
         }
+    }
+
+    private static function setSession(int $id, string $user_firstname, string $user_lastname) : void {
+        $_SESSION['user_firstname'] = $user_firstname;
+        $_SESSION['user_lastname'] = $user_lastname;
+        $_SESSION['id'] = $id;
     }
 
     

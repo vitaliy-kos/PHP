@@ -1,0 +1,1 @@
+[2024-10-08T06:14:39.004913+00:00] application_logger.ERROR: Попытка вызова метода actionAuth2 в контроллере Geekbrains\Application\Domain\Controllers\UserController [] []
