@@ -115,13 +115,8 @@ class UserController extends AbstractController {
     }
 
     public function actionDelete(): void {
-        if (User::exists($_GET['id'])) {
-            User::deleteFromStorage($_GET['id']);
-
-            header('Location: /user');
-        }
-        else {
-            throw new Exception("Пользователь не существует");
+        if (User::exists($_POST['id'])) {
+            User::deleteFromStorage($_POST['id']);
         }
     }
 
@@ -161,6 +156,25 @@ class UserController extends AbstractController {
             header('Location: /');
             exit;
         }
+    }
+
+    public function actionIndexRefresh(){
+        $moreId = null;
+        
+        if(isset($_POST['maxId']) && ($_POST['maxId'] > 0)){
+            $moreId = $_POST['maxId'];
+        }
+
+        $users = User::all($moreId);
+        $usersData = [];
+
+        if (count($users) > 0) {
+            foreach($users as $user){
+                $usersData[] = $user->getUserDataAsArray();
+            }
+        }
+
+        return json_encode($usersData);
     }
 
 }

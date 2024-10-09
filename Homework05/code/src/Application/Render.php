@@ -8,16 +8,16 @@ use Twig\Environment;
 
 class Render {
 
-    private string $viewFolder = '/Domain/Views/';
+    private string $viewFolder = '/src/Domain/Views/';
     private FilesystemLoader $loader;
     private Environment $environment;
 
     public function __construct(){
-
-        $this->loader = new FilesystemLoader(dirname(__DIR__) . $this->viewFolder);
+        
+        $this->loader = new FilesystemLoader($_SERVER['DOCUMENT_ROOT'] . '/../' . $this->viewFolder);
         $this->environment = new Environment($this->loader, [
-            'debug' => true,
-           // 'cache' => $_SERVER['DOCUMENT_ROOT'].'/cache/',
+            // 'debug' => true,
+           // 'cache' => $_SERVER['DOCUMENT_ROOT'] . '/../cache/',
         ]);
         $this->environment->addExtension(new DebugExtension());
     }
@@ -27,7 +27,8 @@ class Render {
 
         $templateVariables['user_authorized'] = $_SESSION['id'] ?? false ? true : false;
         $templateVariables['user_firstname'] = $_SESSION['user_firstname'] ?? "";
-
+        $templateVariables['is_admin'] = $_SESSION['role'] ?? '' == 'admin' ? true : false;
+        
         // ob_start();
         // \xdebug_info();
         // $xdebug = ob_get_clean();
@@ -40,7 +41,7 @@ class Render {
         $contentTemplateName = "error.twig";
         $viewFolder = '/src/Domain/Views/';
 
-        $loader = new FilesystemLoader($_SERVER['DOCUMENT_ROOT'] . $viewFolder);
+        $loader = new FilesystemLoader($_SERVER['DOCUMENT_ROOT'] . '/../' . $viewFolder);
         $environment = new Environment($loader, [
             // 'cache' => $_SERVER['DOCUMENT_ROOT'].'/cache/',
         ]);
@@ -53,7 +54,7 @@ class Render {
         return $template->render($templateVariables);
     }
 
-    public function renderPageWithForm(string $contentTemplateName = 'page-index.tpl', array $templateVariables = []) {
+    public function renderPageWithForm(string $contentTemplateName = 'index.twig', array $templateVariables = []) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         
         $templateVariables['csrf_token'] = $_SESSION['csrf_token'];

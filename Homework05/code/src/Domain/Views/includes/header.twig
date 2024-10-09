@@ -1,17 +1,34 @@
-<header>
-    {% if user_authorized != "" %}
-        Привет, {{ user_firstname }}<br>
-    {% endif %}
-    Текущее время: {{ date()|date('H:i:s') }}<br>
-    <ul class="menu">
-        {% if not user_authorized %}
-            <li><a href="/user/auth">Авторизация в системе</a></li>
-        {% else %}
-            <li><a href="/">Главная</a></li>
-            <li><a href="/user">Пользователи</a></li>
-            <li><a href="/user/create">Создать пользователя</a></li>
-            <li><a href="/user/logout">Выйти из системы</a></li>
-        {% endif %}
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                {% if user_authorized != "" %}
+                    Привет,
+                    {{ user_firstname }}<br>
+                {% endif %}
+            </a>
+        </div>
 
-    </ul>
-</header>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li>
+                <a href="/" class="nav-link px-2">Главная</a>
+            </li>
+            <li>
+                <a href="/user" class="nav-link px-2">Пользователи</a>
+            </li>
+            <li>
+                <a href="/user/create" class="nav-link px-2">Создать пользователя</a>
+            </li>
+            
+        </ul>
+
+        <div class="col-md-3 text-end">
+            {% if not user_authorized %}
+                <a href="/user/auth" type="button" class="btn btn-outline-primary me-2">Войти</a>
+            {% else %}
+                <a href="/user/logout" type="button" class="btn btn-outline-danger me-2">Выйти</a>
+            {% endif %}
+            
+        </div>
+    </header>
+</div>

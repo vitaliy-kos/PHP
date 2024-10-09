@@ -32,7 +32,7 @@ class Application {
         Application::$logger->pushHandler(new FirePHPHandler());
     }
 
-    public function run() : string {
+    public function run() {
         session_start();
 
         if (isset($_COOKIE['auth'])) {

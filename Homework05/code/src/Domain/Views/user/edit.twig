@@ -2,17 +2,28 @@
 
 {% block content %}
 <form action="/user/update" method="post" class="create-user">
-    <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    
-    <h1>Редактирование пользователя</h1>
-    <h2>ID {{ user.getId() }}</h2>
-    
-    <input type="hidden" name="id" value="{{ user.getId() }}">
-    <input type="text" name="firstname" placeholder="Имя" value="{{ user.getFirstName() }}">
-    <input type="text" name="lastname" placeholder="Фамилия" value="{{ user.getLastName() }}">
-    <input type="text" name="birthday" placeholder="Дата рождения в формате 31-12-2024" value="{{ user.getBirthday() | date('d-m-Y') }}">
 
-    <input type="submit" value="Сохранить">
+    <h2 class="text-center mb-3">Редактирование пользователя - ID {{ user.getId() }}</h2>
+
+    <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input type="hidden" name="id" value="{{ user.getId() }}">
+
+    <div class="form-floating mt-2">
+        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Имя" value="{{ user.getFirstName() }}">
+        <label for="firstname">Имя</label>
+    </div>
+
+    <div class="form-floating mt-2">
+        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Фамилия" value="{{ user.getLastName() }}">
+        <label for="lastname">Имя</label>
+    </div>
+
+    <div class="form-floating mt-2">
+        <input type="text" class="form-control" id="birthday" name="birthday" placeholder="Дата рождения в формате 31-12-2024" value="{{ user.getBirthday() | date('d-m-Y') }}">
+        <label for="birthday">Дата рождения</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">Сохранить</button>
 
 </form>
 {% endblock %}

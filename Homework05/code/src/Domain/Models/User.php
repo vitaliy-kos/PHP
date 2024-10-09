@@ -1,5 +1,6 @@
 <?php
 namespace Geekbrains\Application\Domain\Models;
+
 use Geekbrains\Application\Application\Application;
 
 class User {
@@ -8,7 +9,7 @@ class User {
     private ?string $userLastName;
     private ?int $userBirthday;
 
-    public function __construct(string $firstName = null, string $lastName = null, int $birthday = null, int $id_user = null){
+    public function __construct(string $firstName = null, string $lastName = null, int $birthday = null, int $id_user = null) {
         $this->userFirstName = $firstName;
         $this->userLastName = $lastName;
         $this->userBirthday = $birthday;
@@ -85,8 +86,12 @@ class User {
         ]);
     }
 
-    public static function all() : array {
+    public static function all($moreId = 0) : array {
         $sql = "SELECT * FROM users";
+
+        if ($moreId > 0) {
+            $sql .= " WHERE id > " . (int)$moreId;
+        }
 
         $handler = Application::$storage->get()->prepare($sql);
         $handler->execute([]);
@@ -163,6 +168,17 @@ class User {
         }
 
         return $roles;
+    }
+
+    public function getUserDataAsArray(): array {
+        $userArray = [
+            'id' => $this->idUser,
+            'username' => $this->userFirstName, 
+            'userlastname' => $this->userLastName,
+            'userbirthday' => date('d.m.Y', $this->userBirthday)
+        ];
+
+        return $userArray;
     }
     
 }

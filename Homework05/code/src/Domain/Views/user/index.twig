@@ -1,13 +1,48 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
+<h2 class="text-center mb-5">Список пользователей в хранилище</h2>
 
-<p>Список пользователей в хранилище</p>
+<div class="table-responsive small" id="userTable">
 
-<ul id="navigation">
-    {% for user in users %}
-        <li>{{ user.getFirstName() }} {{ user.getLastName() }}. День рождения: {{ user.getBirthday() | date('d.m.Y') }} <a href="/user/edit/?id={{ user.getId() }}" class="btn">Редактировать</a><a href="/user/delete/?id={{ user.getId() }}" class="btn">Удалить</a></li>
-    {% endfor %}
-</ul>
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="cole">ID</th>
+                <th scope="cole">Имя</th>
+                <th scope="cole">Фамилия</th>
+                <th scope="cole">Дата рождения</th>
+                {% if is_admin %}
+                    <th scope="cole">Действия</th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.getId() }}</td>
+                    <td>{{ user.getFirstName() }}</td>
+                    <td>{{ user.getLastName() }}</td>
+                    <td>
+                        {% if user.getBirthday() is not empty %}
+                            {{ user.getBirthday() | date('d.m.Y') }}
+                        {% else %}
+                            <b>Не установлена</b>
+                        {% endif %}
+                    </td>
+
+                    {% if is_admin %}
+                        <td>
+                            <a href="/user/edit/?id={{ user.getId() }}" class="btn btn-primary">Редактировать</a>
+                            <a href="#" class="btn btn-danger delete_user" data-id="{{ user.getId() }}">Удалить</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
 
 {% endblock %}
